@@ -10,5 +10,5 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Check code
-        run: ls -la
+      - name: build wit maven 
+        run: ./mvnw clean install -DskipTests
