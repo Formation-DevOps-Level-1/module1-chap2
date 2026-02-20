@@ -1,7 +1,9 @@
 name: Pull Request Validation
 on:
   pull_request_review:
-    types: [submitted, opened, reopened]
+    types: [submitted]
+  pull_request:
+    types: [opened]
 permissions:
   pull-requests: write
   
@@ -11,6 +13,7 @@ permissions:
 jobs:
   add-label:
     runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_review'
     steps:
       - name: Add label to pull request
         uses: actions-ecosystem/action-add-labels@v1
@@ -26,7 +29,7 @@ jobs:
           ADD_LABEL: "approved"
   assign-creator:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_review' && (github.event.review.state == 'opened' || github.event.review.state == 'reopened')
+    if: github.event_name == 'pull_request'
     steps:
       - name: Assign PR creator
         uses: actions/github-script@v7
