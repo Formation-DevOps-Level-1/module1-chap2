@@ -10,7 +10,41 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: build with maven
         run: |
           chmod +x mvnw
-          ./mvnw clean install -DskipTests
+          ./mvnw clean package -DskipTests
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-target
+          path: target/
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: maven-target
+          path: target/
+      - name: test with maven
+        run: |
+          chmod +x mvnw
+          ./mvnw test
