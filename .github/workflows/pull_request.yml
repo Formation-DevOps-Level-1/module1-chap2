@@ -2,8 +2,9 @@ name: Pull Request Validation
 on:
   pull_request_review:
     types: [submitted]
-    permissions:
-      pull-requests: write
+permissions:
+  pull-requests: write
+  
       
     
 
@@ -17,7 +18,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           labels: 'reviewed'
       - name: Label when approved
-        if : github.event.review.state == 'approved'
+        if: github.event.review.state == 'approved'
         uses: pullreminders/label-when-approved-action@main
         env:
           APPROVALS: "1"
