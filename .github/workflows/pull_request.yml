@@ -19,7 +19,7 @@ jobs:
           labels: 'reviewed'
       - name: Label when approved
         if: github.event.review.state == 'approved'
-        uses: pullreminders/label-when-approved-action@main
+        uses: ableco/label-when-approved-action@main
         env:
           APPROVALS: "1"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
