@@ -1,0 +1,23 @@
+name: Pull Request Validation
+on:
+  pull_request_review:
+    types: [submitted]
+    branches:
+      - main
+
+jobs:
+  add-label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add label to pull request
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: 'reviewed'
+      - name: Label when approved
+        if : github.event.review.state == 'approved'
+        uses: pullreminders/label-when-approved-action@main
+        env:
+          APPROVALS: "1"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ADD_LABEL: "approved"
