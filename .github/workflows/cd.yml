@@ -11,7 +11,7 @@ on:
         required: true
         type: choice
         options:
-          - staging
+          - stagging
           - production
 jobs:
   deploy:
