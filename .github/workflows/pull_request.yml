@@ -7,13 +7,10 @@ on:
 permissions:
   pull-requests: write
   
-      
-    
-
 jobs:
   add-label:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_review'
+    if: github.event_name == 'pull_request'
     steps:
       - name: Add label to pull request
         uses: actions-ecosystem/action-add-labels@v1
