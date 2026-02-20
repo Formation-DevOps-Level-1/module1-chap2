@@ -24,4 +24,4 @@ jobs:
         env:
           MESSAGE: ${{vars.MESSAGE}}
         run: |
-          echo ${MESSAGE}
+          echo "$MESSAGE"
