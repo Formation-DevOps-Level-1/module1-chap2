@@ -2,8 +2,7 @@ name: Pull Request Validation
 on:
   pull_request_review:
     types: [submitted]
-    branches:
-      - main
+    
 
 jobs:
   add-label:
