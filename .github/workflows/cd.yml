@@ -4,15 +4,24 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Choose the environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
 jobs:
   deploy:
-    environment: staging
+    environment: ${{inputs.target_env}}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Deploy to staging
+      - name: Deploy to ${{inputs.target_env}}
         env:
           MESSAGE: ${{vars.MESSAGE}}
         run: |
-          echo "Deploying to staging environment with message: $MESSAGE"
+          echo ${MESSAGE}
