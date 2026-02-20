@@ -7,19 +7,16 @@ on:
 permissions:
   pull-requests: write
   
-      
-    
-
 jobs:
   add-label:
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_review'
+    if: github.event_name == 'pull_request'
     steps:
       - name: Add label to pull request
         uses: actions-ecosystem/action-add-labels@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          labels: 'reviewed'
+          labels: 'bug, enhancement, help wanted'
       - name: Label when approved
         if: github.event.review.state == 'approved'
         uses: ableco/label-when-approved-action@main
